@@ -2,6 +2,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,6 +22,20 @@ class RestaurantTest {
         restaurant =new Restaurant("Amelie's cafe","Chennai",openingTime,closingTime);
         restaurant.addToMenu("Sweet corn soup",119);
         restaurant.addToMenu("Vegetable lasagne", 269);
+    }
+
+    // Setup for testing displayDetails() Method which has a Console output
+    private final PrintStream standardOut = System.out;
+    private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
+
+    // We reassign the standard output stream to a new PrintStream with a ByteArrayOutputStream
+    public void setUp() {
+        System.setOut(new PrintStream(outputStreamCaptor));
+    }
+
+    // Restoring the standard output stream to its original state
+    public void tearDown() {
+        System.setOut(standardOut);
     }
 
     //>>>>>>>>>>>>>>>>>>>>>>>>>OPEN/CLOSED<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -78,5 +94,24 @@ class RestaurantTest {
         int totalCostIncurred = restaurant.returnsCostIncurredForOrderPlaced(selectedItems);
         assertEquals(0,totalCostIncurred);
     }
-    //<<<<<<<<<<<<<<<<<<CALCULATE COST INCURRED>>>>>>>>>>>>>>>>>>>>>>>>
+    //<<<<<<<<<<<<<<<<<<<<<<<CALCULATE COST INCURRED>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+    //>>>>>>>>>>>>>>>>>>>>>>TEST CASES TO IMPROVE CODE COVERAGE<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    @Test
+    public void view_restaurant_details(){
+        setUp();
+
+        restaurant.displayDetails();
+        assertEquals("Restaurant:Amelie's cafe\n" +
+                "Location:Chennai\n" +
+                "Opening time:10:30\n" +
+                "Closing time:22:00\n" +
+                "Menu:\n" +
+                "[Sweet corn soup:119\n" +
+                ", Vegetable lasagne:269\n" +
+                "]", outputStreamCaptor.toString().trim()); // The trim method is added to remove
+                                                            // the new line that System.out.println() adds
+        tearDown();
+    }
+    //<<<<<<<<<<<<<<<<<<<<<<TEST CASES TO IMPROVE CODE COVERAGE>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 }

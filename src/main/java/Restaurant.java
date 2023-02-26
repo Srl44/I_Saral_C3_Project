@@ -74,6 +74,17 @@ public class Restaurant {
 
     // Method to return the total cost incurred by the user for their chosen items
     public int returnsCostIncurredForOrderPlaced(List<String> selectedItems){
-        return -1;
+        int totalCostIncurred = 0;
+
+        List<Item> availableItems = getMenu();
+        for(String selectedItemName : selectedItems){
+            for(Item item : availableItems){
+                if(selectedItemName.equals(item.getName())){
+                    totalCostIncurred += item.getPrice();
+                }
+            }
+        }
+
+        return totalCostIncurred;
     }
 }
