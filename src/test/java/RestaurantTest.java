@@ -3,6 +3,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -60,4 +63,20 @@ class RestaurantTest {
                 ()->restaurant.removeFromMenu("French fries"));
     }
     //<<<<<<<<<<<<<<<<<<<<<<<MENU>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+    //>>>>>>>>>>>>>>>>>>>>>>CALCULATE COST INCURRED<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    @Test
+    public void return_total_cost_incurred_of_selected_items_after_menu_items_are_selected(){
+        List<String> selectedItems = Arrays.asList("Sweet corn soup", "Vegetable lasagne");
+        int totalCostIncurred = restaurant.returnsCostIncurredForOrderPlaced(selectedItems);
+        assertEquals(388,totalCostIncurred);
+    }
+
+    @Test
+    public void return_total_cost_incurred_as_0_when_no_items_are_selected(){
+        List<String> selectedItems = new ArrayList<String>();
+        int totalCostIncurred = restaurant.returnsCostIncurredForOrderPlaced(selectedItems);
+        assertEquals(0,totalCostIncurred);
+    }
+    //<<<<<<<<<<<<<<<<<<CALCULATE COST INCURRED>>>>>>>>>>>>>>>>>>>>>>>>
 }

@@ -72,4 +72,8 @@ public class Restaurant {
         return name;
     }
 
+    // Method to return the total cost incurred by the user for their chosen items
+    public int returnsCostIncurredForOrderPlaced(List<String> selectedItems){
+        return -1;
+    }
 }
