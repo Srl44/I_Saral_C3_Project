@@ -17,16 +17,25 @@ public class Restaurant {
         this.closingTime = closingTime;
     }
 
+    // Method to determine if the Restaurant is open or closed.
     public boolean isRestaurantOpen() {
-        return true;
-        //DELETE ABOVE STATEMENT AND WRITE CODE HERE
+        boolean is_Restaurant_Open = false;
+
+        // The Restaurant is marked as Open if the current time is after its designated opening time and
+        // before its designated closing time.
+        if(getCurrentTime().isAfter(openingTime) && getCurrentTime().isBefore(closingTime)) {
+            is_Restaurant_Open = true;
+        }
+
+        return is_Restaurant_Open;
     }
 
     public LocalTime getCurrentTime(){ return  LocalTime.now(); }
 
+    // The getter method for menu attribute has been defined here
+    // as menu is initialized with private access modifier.
     public List<Item> getMenu() {
-        return null;
-        //DELETE ABOVE RETURN STATEMENT AND WRITE CODE HERE
+        return this.menu;
     }
 
     private Item findItemByName(String itemName){
